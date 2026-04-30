@@ -25,7 +25,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// DB connect
+// DB connect`
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("Server running on port 5000");
+  console.log("index running on port 5000");
 });
 
 

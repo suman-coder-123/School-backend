@@ -1,20 +1,22 @@
 import mongoose from "mongoose";
 
+const periodSchema = new mongoose.Schema({
+  subject: String,
+  time: String,
+});
+
+const daySchema = new mongoose.Schema({
+  day: String,
+  periods: [periodSchema],
+});
+
 const timetableSchema = new mongoose.Schema(
   {
-    class: String, // e.g. "Class 10"
-
-    schedule: [
-      {
-        day: String, // Monday
-        periods: [
-          {
-            subject: String,
-            time: String, // "9:00 - 10:00"
-          },
-        ],
-      },
-    ],
+    class: {
+      type: String,
+      required: true,
+    },
+    schedule: [daySchema],
   },
   { timestamps: true }
 );

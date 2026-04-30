@@ -1,39 +1,46 @@
 import Timetable from "../models/Timetable.js";
 
-
-// ➕ ADD / UPDATE TIMETABLE
-export const saveTimetable = async (req, res) => {
+// ✅ SAVE TIMETABLE
+export const addTimetable = async (req, res) => {
   try {
     const { class: className, schedule } = req.body;
 
-    const timetable = await Timetable.findOneAndUpdate(
-      { class: className },
-      { schedule },
-      { upsert: true, new: true }
-    );
+    // optional: replace existing timetable for same class
+    await Timetable.findOneAndDelete({ class: className });
 
-    res.json(timetable);
+    const data = await Timetable.create({
+      class: className,
+      schedule,
+    });
 
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err.message);
+  }
+};
+
+// ✅ GET ALL
+export const getTimetable = async (req, res) => {
+  try {
+    const data = await Timetable.find();
+    res.json(data);
   } catch (err) {
     res.status(500).json(err.message);
   }
 };
 
-
-// 🔍 GET TIMETABLE BY CLASS
-export const getTimetable = async (req, res) => {
+// ✅ GET BY CLASS
+export const getTimetableByClass = async (req, res) => {
   try {
+    const { className } = req.params;
+
     const data = await Timetable.findOne({
-      class: req.params.class,
+      class: className,
     });
 
-    if (!data) {
-      return res.status(404).json("No timetable found");
-    }
-
     res.json(data);
-
   } catch (err) {
     res.status(500).json(err.message);
   }
-};  
+};

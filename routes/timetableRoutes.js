@@ -1,12 +1,14 @@
 import express from "express";
 import {
-  saveTimetable,
+  addTimetable,
   getTimetable,
+  getTimetableByClass,
 } from "../controllers/timetableController.js";
 
 const router = express.Router();
 
-router.post("/", saveTimetable);
-router.get("/:class", getTimetable);
+router.post("/", addTimetable);
+router.get("/", getTimetable);
+router.get("/:className", getTimetableByClass);
 
 export default router;
