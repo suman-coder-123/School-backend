@@ -1,6 +1,5 @@
 import Timetable from "../models/Timetable.js";
 
-// ✅ SAVE TIMETABLE
 export const addTimetable = async (req, res) => {
   try {
     const { class: className, schedule } = req.body;

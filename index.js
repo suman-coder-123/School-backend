@@ -21,21 +21,19 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "*", // later you can restrict
+  origin: "*",
 }));
 app.use(express.json());
 
-// DB connect`
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
-
 app.get("/", (req, res) => {
   res.send("API Running 🚀 abhi ki hi he ");
 });
 
 app.listen(5000, () => {
-  console.log("index running on port 5000");
+  console.log("server running on port 5000");
 });
 
 
