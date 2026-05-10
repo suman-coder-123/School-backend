@@ -1,33 +1,127 @@
 import Student from "../models/Student.js";
 
-// CREATE
+// ================= CREATE =================
+
+// ADMIN CREATES BASIC STUDENT
+
 export const addStudent = async (req, res) => {
   try {
+
     const student = await Student.create(req.body);
-    res.json(student);
+
+    res.status(201).json(student);
+
   } catch (err) {
-    res.status(500).json(err.message);
+
+    res.status(500).json({
+      message: err.message,
+    });
   }
 };
 
-// READ
+// ================= READ ================= 
+
 export const getStudents = async (req, res) => {
-  const students = await Student.find().sort({ createdAt: -1 });
+
+  const students = await Student.find()
+    .sort({ createdAt: -1 });
+
   res.json(students);
 };
 
-// UPDATE
+// ================= UPDATE =================
+
+// ADMIN UPDATE
+
 export const updateStudent = async (req, res) => {
-  const updated = await Student.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+
+  const updated =
+    await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
   res.json(updated);
 };
 
-// DELETE
+// ================= DELETE =================
+
 export const deleteStudent = async (req, res) => {
-  await Student.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
+
+  await Student.findByIdAndDelete(
+    req.params.id
+  );
+
+  res.json({
+    message: "Deleted",
+  });
+};
+
+// ================= STUDENT PROFILE =================
+
+// STUDENT UPDATES OWN PROFILE
+
+export const updateMyProfile = async (
+  req,
+  res
+) => {
+  try {
+
+    const student =
+      await Student.findOne({
+        userId: req.user.id,
+      });
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found",
+      });
+    }
+
+    // UPDATE OWN DATA
+    Object.assign(student, req.body);
+
+    await student.save();
+
+    res.json({
+      message: "Profile updated successfully",
+      student,
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+// ================= GET OWN PROFILE =================
+
+export const getMyProfile = async (
+  req,
+  res
+) => {
+  try {
+
+    const student =
+      await Student.findOne({
+        userId: req.user.id,
+      });
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found",
+      });
+    }
+
+    res.json(student);
+
+  } catch (err) {
+
+    res.status(500).json({
+      message: err.message,
+    });
+  }
 };

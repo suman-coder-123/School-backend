@@ -49,4 +49,4 @@ app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/results", resultRoutes);
 app.use("/api/fees", feeRoutes);
 app.use("/api/timetable", timetableRoutes); 
-app.use("/api/notices", noticeRoutes); // ✅ MUST EXIST
+app.use("/api/notices", noticeRoutes); // ✅ MUST
