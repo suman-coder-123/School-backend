@@ -10,21 +10,18 @@ import {
 } from "../controllers/studentController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
-
 import adminMiddleware from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
 // ================= STUDENT =================
 
-// GET OWN PROFILE
 router.get(
   "/my-profile",
   authMiddleware,
   getMyProfile
 );
 
-// UPDATE OWN PROFILE
 router.put(
   "/my-profile",
   authMiddleware,
@@ -33,7 +30,6 @@ router.put(
 
 // ================= ADMIN =================
 
-// ADD STUDENT
 router.post(
   "/",
   authMiddleware,
@@ -41,7 +37,6 @@ router.post(
   addStudent
 );
 
-// GET ALL STUDENTS
 router.get(
   "/",
   authMiddleware,
@@ -49,7 +44,6 @@ router.get(
   getStudents
 );
 
-// UPDATE STUDENT
 router.put(
   "/:id",
   authMiddleware,
@@ -57,14 +51,11 @@ router.put(
   updateStudent
 );
 
-// DELETE STUDENT
 router.delete(
   "/:id",
   authMiddleware,
   adminMiddleware,
   deleteStudent
 );
-
-
 
 export default router;
