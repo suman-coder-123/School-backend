@@ -42,7 +42,7 @@ app.listen(PORT, () => {
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/students", studentRoutes);
+app.use("/api/student", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/enquiries", enquiryRoutes);
