@@ -3,20 +3,29 @@ import jwt from "jsonwebtoken";
 const authMiddleware = (req, res, next) => {
   try {
 
-    // ✅ GET TOKEN
-    const token = req.headers.authorization;
+    // ✅ GET HEADER
+    const authHeader =
+      req.headers.authorization;
 
     // ❌ NO TOKEN
-    if (!token) {
+    if (!authHeader) {
       return res.status(401).json({
         message: "No token provided",
       });
     }
 
-    // ✅ VERIFY TOKEN
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    // ✅ REMOVE BEARER
+    const token = authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : authHeader;
 
-    // ✅ SAVE USER DATA
+    // ✅ VERIFY
+    const verified = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    // ✅ SAVE USER
     req.user = verified;
 
     next();
