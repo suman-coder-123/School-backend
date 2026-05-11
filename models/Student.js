@@ -1,44 +1,24 @@
+// backend/models/Student.js
+
 import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
-    // 🔗 LINKED USER ACCOUNT
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-
-    // BASIC INFO (ADMIN)
     name: String,
 
-    className: String,
+    class: String,
 
-    rollNo: String,
+    section: String,
 
     status: {
       type: String,
       default: "Active",
     },
 
-    // TEACHER
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
     },
-
-    // PROFILE INFO (STUDENT)
-    fatherName: String,
-
-    motherName: String,
-
-    phone: String,
-
-    address: String,
-
-    photo: String,
-
-    documents: [String],
-
   },
   { timestamps: true }
 );

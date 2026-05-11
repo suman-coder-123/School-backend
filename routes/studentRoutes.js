@@ -1,3 +1,5 @@
+// backend/routes/studentRoutes.js
+
 import express from "express";
 
 import {
@@ -5,31 +7,15 @@ import {
   getStudents,
   updateStudent,
   deleteStudent,
-  updateMyProfile,
-  getMyProfile,
 } from "../controllers/studentController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
+
 import adminMiddleware from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
-// ================= STUDENT =================
-
-router.get(
-  "/my-profile",
-  authMiddleware,
-  getMyProfile
-);
-
-router.put(
-  "/my-profile",
-  authMiddleware,
-  updateMyProfile
-);
-
-// ================= ADMIN =================
-
+// CREATE
 router.post(
   "/",
   authMiddleware,
@@ -37,6 +23,7 @@ router.post(
   addStudent
 );
 
+// READ
 router.get(
   "/",
   authMiddleware,
@@ -44,6 +31,7 @@ router.get(
   getStudents
 );
 
+// UPDATE
 router.put(
   "/:id",
   authMiddleware,
@@ -51,6 +39,7 @@ router.put(
   updateStudent
 );
 
+// DELETE
 router.delete(
   "/:id",
   authMiddleware,
