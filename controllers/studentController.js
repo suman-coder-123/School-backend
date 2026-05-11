@@ -68,18 +68,26 @@ export const updateMyProfile = async (
 ) => {
   try {
 
-    const student =
+    let student =
       await Student.findOne({
         userId: req.user.id,
       });
 
+    // CREATE IF NOT EXISTS
     if (!student) {
-      return res.status(404).json({
-        message: "Student not found",
+
+      student = await Student.create({
+        userId: req.user.id,
+        ...req.body,
+      });
+
+      return res.status(201).json({
+        message: "Profile created successfully",
+        student,
       });
     }
 
-    // UPDATE OWN DATA
+    // UPDATE EXISTING
     Object.assign(student, req.body);
 
     await student.save();
@@ -96,9 +104,7 @@ export const updateMyProfile = async (
     });
   }
 };
-
 // ================= GET OWN PROFILE =================
-
 export const getMyProfile = async (
   req,
   res
@@ -110,10 +116,9 @@ export const getMyProfile = async (
         userId: req.user.id,
       });
 
+    // RETURN EMPTY OBJECT
     if (!student) {
-      return res.status(404).json({
-        message: "Student not found",
-      });
+      return res.json({});
     }
 
     res.json(student);
