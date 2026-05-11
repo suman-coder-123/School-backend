@@ -1,29 +1,28 @@
-// backend/models/Student.js
-
 import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
 
-    class: String,
+    class: {
+      type: String,
+      required: true,
+    },
 
-    section: String,
+    section: {
+      type: String,
+      required: true,
+    },
 
     status: {
       type: String,
       default: "Active",
     },
-
-    teacher: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Teacher",
-    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model(
-  "Student",
-  studentSchema
-);
+export default mongoose.model("Student", studentSchema);

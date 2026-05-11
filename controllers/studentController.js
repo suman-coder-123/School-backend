@@ -1,59 +1,39 @@
-// backend/controllers/studentController.js
-
 import Student from "../models/Student.js";
 
-// CREATE
-export const addStudent = async (req, res) => {
+// ✅ GET ALL
+export const getStudents = async (req, res) => {
   try {
+    const students = await Student.find();
 
-    const student = await Student.create(
-      req.body
-    );
-
-    res.json(student);
+    res.json(students);
 
   } catch (err) {
-
     res.status(500).json(err.message);
   }
 };
 
-// READ
-export const getStudents = async (req, res) => {
+// ✅ ADD STUDENT
+export const addStudent = async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
 
-  const students = await Student.find()
-    .sort({ createdAt: -1 });
+    res.json(student);
 
-  res.json(students);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
 };
 
-// UPDATE
-export const updateStudent = async (
-  req,
-  res
-) => {
+// ✅ DELETE
+export const deleteStudent = async (req, res) => {
+  try {
+    await Student.findByIdAndDelete(req.params.id);
 
-  const updated =
-    await Student.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    res.json({
+      message: "Deleted",
+    });
 
-  res.json(updated);
-};
-
-// DELETE
-export const deleteStudent = async (
-  req,
-  res
-) => {
-
-  await Student.findByIdAndDelete(
-    req.params.id
-  );
-
-  res.json({
-    message: "Deleted",
-  });
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
 };

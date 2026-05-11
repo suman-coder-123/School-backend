@@ -7,16 +7,29 @@ import {
   forgotPassword,
 } from "../controllers/authController.js";
 
-import authMiddleware from "../middleware/authMiddleware.js";
+import {
+  protect,
+} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// ✅ REGISTER
 router.post("/register", register);
 
+// ✅ LOGIN
 router.post("/login", login);
 
-router.put("/change-password", authMiddleware, changePassword);
+// ✅ CHANGE PASSWORD (protected)
+router.put(
+  "/change-password",
+  protect,
+  changePassword
+);
 
-router.put("/forgot-password", forgotPassword);
+// ✅ FORGOT PASSWORD
+router.put(
+  "/forgot-password",
+  forgotPassword
+);
 
 export default router;

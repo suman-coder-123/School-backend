@@ -1,49 +1,31 @@
-// backend/routes/studentRoutes.js
-
 import express from "express";
 
 import {
-  addStudent,
   getStudents,
-  updateStudent,
+  addStudent,
   deleteStudent,
 } from "../controllers/studentController.js";
 
-import authMiddleware from "../middleware/authMiddleware.js";
-
-import adminMiddleware from "../middleware/adminMiddleware.js";
+import {
+  protect,
+  adminOnly,
+} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// CREATE
+router.get("/", getStudents);
+
 router.post(
   "/",
-  authMiddleware,
-  adminMiddleware,
+  protect,
+  adminOnly,
   addStudent
 );
 
-// READ
-router.get(
-  "/",
-  authMiddleware,
-  adminMiddleware,
-  getStudents
-);
-
-// UPDATE
-router.put(
-  "/:id",
-  authMiddleware,
-  adminMiddleware,
-  updateStudent
-);
-
-// DELETE
 router.delete(
   "/:id",
-  authMiddleware,
-  adminMiddleware,
+  protect,
+  adminOnly,
   deleteStudent
 );
 
