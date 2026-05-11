@@ -1,37 +1,24 @@
-// backend/middleware/authMiddleware.js
-
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (
-  req,
-  res,
-  next
-) => {
+const authMiddleware = (req, res, next) => {
   try {
+    const authHeader = req.headers.authorization;
 
-    const token =
-      req.headers.authorization;
-
-    if (!token) {
-      return res.status(401).json({
-        message: "No token provided",
-      });
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token provided" });
     }
 
-    const verified = jwt.verify(
-      token,
-      process.env.JWT_SECRET
-    );
+    // ✅ FIXED: Strip "Bearer " prefix before verifying
+    const token = authHeader.startsWith("Bearer ")
+      ? authHeader.slice(7)
+      : authHeader;
 
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
-
     next();
 
   } catch (err) {
-
-    return res.status(401).json({
-      message: "Invalid token",
-    });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 

@@ -14,31 +14,23 @@ import feeRoutes from "./routes/feeRoutes.js";
 import timetableRoutes from "./routes/timetableRoutes.js";
 import noticeRoutes from "./routes/noticeRoutes.js";
 
-
-
 dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: "*",
-}));
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
+
 app.get("/api/test", (req, res) => {
-  res.send("API Running 🚀 abhi ki hi he ");
+  res.send("API Running 🚀");
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-
+// ✅ ALL ROUTES BEFORE app.listen()
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
@@ -48,5 +40,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/results", resultRoutes);
 app.use("/api/fees", feeRoutes);
-app.use("/api/timetable", timetableRoutes); 
-app.use("/api/notices", noticeRoutes); // ✅ MUST
+app.use("/api/timetable", timetableRoutes);
+app.use("/api/notices", noticeRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+// ✅ listen() always LAST
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
