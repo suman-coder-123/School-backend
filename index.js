@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
-import studentRoutes from "./routes/studentRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import enquiryRoutes from "./routes/enquiryRoutes.js";
@@ -13,6 +12,7 @@ import resultRoutes from "./routes/resultRoutes.js";
 import feeRoutes from "./routes/feeRoutes.js";
 import timetableRoutes from "./routes/timetableRoutes.js";
 import noticeRoutes from "./routes/noticeRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ app.get("/api/test", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/students", studentRoutes);
+app.use("/api/students" , studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/enquiries", enquiryRoutes);

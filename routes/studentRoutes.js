@@ -8,7 +8,7 @@ import {
 
 import {
   protect,
-  adminOnly,
+  // adminOnly,
 } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -17,15 +17,15 @@ router.get("/", getStudents);
 
 router.post(
   "/",
-  protect,
-  adminOnly,
+   protect,
+  // adminOnly,
   addStudent
 );
 
 router.delete(
   "/:id",
   protect,
-  adminOnly,
+  // adminOnly,
   deleteStudent
 );
 
