@@ -13,7 +13,7 @@ import feeRoutes from "./routes/feeRoutes.js";
 import timetableRoutes from "./routes/timetableRoutes.js";
 import noticeRoutes from "./routes/noticeRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
-
+import eventRoutes from "./routes/eventRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -42,6 +42,10 @@ app.use("/api/results", resultRoutes);
 app.use("/api/fees", feeRoutes);
 app.use("/api/timetable", timetableRoutes);
 app.use("/api/notices", noticeRoutes);
+app.use(
+  "/api/events",
+  eventRoutes
+);
 
 const PORT = process.env.PORT || 5000;
 
