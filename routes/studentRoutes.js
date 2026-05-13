@@ -6,10 +6,10 @@ import {
   deleteStudent,
 } from "../controllers/studentController.js";
 
-import {
-  protect,
-  // adminOnly,
-} from "../middleware/authMiddleware.js";
+// import {
+//   protect,
+//   // adminOnly,
+// } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -17,14 +17,14 @@ router.get("/", getStudents);
 
 router.post(
   "/",
-   protect,
+  //  protect,
   // adminOnly,
   addStudent
 );
 
 router.delete(
   "/:id",
-  protect,
+  // protect,
   // adminOnly,
   deleteStudent
 );
